@@ -1,0 +1,138 @@
+﻿<Window x:Class="FlightGearApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
+        xmlns:oxy="http://oxyplot.org/wpf"
+        xmlns:local="clr-namespace:FlightGearApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid Margin="2,4,-1.667,-4.333">
+        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="108" Margin="3,303,0,0" Stroke="Black" VerticalAlignment="Top" Width="448"/>
+        <Button Name="Play" Content="play" HorizontalAlignment="Left" Height="25" Margin="54,328,0,0" VerticalAlignment="Top" Width="24" Click="Play_Click" RenderTransformOrigin="0.335,2.495"/>
+        <Button Name="Pause" Content="pause" HorizontalAlignment="Left" Height="25" Margin="95,328,0,0" VerticalAlignment="Top" Width="26" Click="Pause_Click" RenderTransformOrigin="-0.182,2.816"/>
+        <Button Name="Stop" Content="stop" HorizontalAlignment="Left" Height="25" Margin="135,328,0,0" VerticalAlignment="Top" Width="26" Click="Stop_Click" RenderTransformOrigin="2.199,0.547"/>
+        <Slider Name="Duration" Minimum="0" Value="{Binding VM_Point_Slider, Mode=OneWay}" PreviewMouseLeftButtonDown="Duration_MouseLeftButtonDown" Thumb.DragCompleted="Duration_DragCompleted" HorizontalAlignment="Left" Height="25" Margin="28,366,0,0" VerticalAlignment="Top" Width="394"/>
+        <TextBox Name="Play_speed" HorizontalAlignment="Left" Height="25" Margin="230,328,0,0" TextWrapping="Wrap" Text="Play Speed" VerticalAlignment="Top" Width="71" FontFamily="Franklin Gothic Medium"/>
+        <TextBox Name="Time" Text="{Binding VM_Time, Mode=OneWay}" HorizontalAlignment="Left" Height="25" Margin="363,328,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="74" RenderTransformOrigin="0.317,3.97"/>
+        <ComboBox Name="Speed" SelectionChanged="Movie_Speed" HorizontalAlignment="Left" Height="25" Margin="315,328,0,0" VerticalAlignment="Top" Width="36" RenderTransformOrigin="0.002,3.642">
+            <ComboBoxItem Content="0.5"/>
+            <ComboBoxItem Content="1" IsSelected="True"/>
+            <ComboBoxItem Content="1.5"/>
+            <ComboBoxItem Content="2"/>
+        </ComboBox>
+        <ProgressBar Name="Throttle2" Minimum="0" Maximum="1" Value="{Binding VM_Throttle2, Mode=OneWay}" HorizontalAlignment="Left" Height="20" Margin="307,53,0,0" VerticalAlignment="Top" Width="244"/>
+        <ProgressBar Minimum="0" Maximum="1" Value="{Binding VM_Rudder, Mode=OneWay}" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="244" Margin="307,96,0,0"/>
+        <Canvas Name="LayoutRoot" Margin="0,-10,0.333,9.667" Grid.ColumnSpan="4">
+            <Ellipse Fill="#FFF4F4F5" Name ="Joystick" Height="131" Canvas.Left="283" Stroke="Black" Canvas.Top="148" Width="136"/>
+            <Ellipse Fill="#FF06063D" Name ="stable" Height="51" Canvas.Left="323" Stroke="Black" Canvas.Top="193" Width="52"/>
+            <Ellipse Fill="#FFF4F4F5" Name="Knob" Height="15" Stroke="Black" Width="15" Canvas.Left="{Binding VM_Aileron, Mode=OneWay}" Canvas.Top="{Binding VM_Elevator, Mode=OneWay}" />
+        </Canvas>
+        <!-- Heading -->
+        <!--<Ellipse Fill="#FFF4F4F5" Name ="Joystick" Height="180" Canvas.Left="238" Stroke="Black" Canvas.Top="77" Width="168"/>
+        <Ellipse Fill="#FFF4F4F5" Name="Knob" Height="15" Canvas.Left="{Binding VM_Aileron, Mode=OneWay}" Stroke="Black" Canvas.Top="{Binding VM_Elevator, Mode=OneWay}" Width="15"/>-->
+        <!-- Heading -->
+        <Ellipse Fill="#FFF4F4F5" Name ="Direction_Heading" Canvas.Left="35" Canvas.Top="322" Stroke="Black" Margin="16,213,708,136"/>
+        <Path Data=" M7.7314458,3.052578 L13.998698,9.3155994 L13.998698,14.038256 L9.4029951,9.445858
+            L9.4029951,18.633959 L6.059896,18.633959 L6.059896,9.445858 L1.4641927,14.038256 L1.4641927,9.3155994 z" 
+             RenderTransformOrigin="0.5,1.0" Stretch="Uniform" UseLayoutRounding="False" Fill="Black" Canvas.Left="70.429" Canvas.Top="227.537" Margin="38.39,114.28,734.614,51.745">
+            <Path.RenderTransform>
+                <TransformGroup>
+                    <RotateTransform Angle="{Binding VM_Heading, Mode=OneWay}"/>
+                </TransformGroup>
+            </Path.RenderTransform>
+        </Path>
+        <!-- Roll  -->
+        <Ellipse Fill="#FFF4F4F5" Name ="Roll" Canvas.Left="35" Canvas.Top="166" Stroke="Black" Margin="24,14,707,343"/>
+        <Line X1="1" Y1="1" X2="1" Y2="20" Fill="Black" StrokeThickness="2" Canvas.Left="86.666" Canvas.Top="167.72" RenderTransformOrigin="0.5,1.0" Stretch="Uniform" UseLayoutRounding="False" Stroke="Black" Margin="-359.924,15.839,322.615,380.463"/>
+        <Line X1="1" Y1="1" X2="1" Y2="20" Fill="Black"  Canvas.Left="86.666" Canvas.Top="167.72" RenderTransformOrigin="0.5,1.0" Stretch="Uniform" UseLayoutRounding="False" Stroke="Black" Margin="-342.573,11.72,338.91,378.501">
+            <Line.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="{Binding VM_Roll, Mode=OneWay}"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Line.RenderTransform>
+        </Line>
+        <!-- Pitch  -->
+        <Ellipse Fill="#FFF4F4F5" Name ="Pitch" Canvas.Left="32" Canvas.Top="16" Stroke="Black" Margin="18,116,707.333,240.667"/>
+        <Line X1="1" Y1="1" X2="1" Y2="20" Fill="Black" StrokeThickness="2" Canvas.Left="82.666" Canvas.Top="16.28" RenderTransformOrigin="0.5,1.0" Stretch="Uniform" UseLayoutRounding="False" Stroke="Black" Margin="-346.013,121.333,345.347,272"/>
+        <Line X1="1" Y1="1" X2="1" Y2="20" Fill="Black"  Canvas.Left="82.946" Canvas.Top="12" RenderTransformOrigin="0.5,1.0" Stretch="Uniform" UseLayoutRounding="False" Stroke="Black" Margin="-357.376,121.333,331.402,271.187">
+            <Line.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="{Binding VM_Pitch, Mode=OneWay}"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Line.RenderTransform>
+        </Line>
+        <!-- Yaw  -->
+        <Ellipse Fill="#FFF4F4F5" Name ="Yaw" Canvas.Left="456" Canvas.Top="16" Stroke="Black" Margin="129,13,598,345"/>
+        <Line X1="1" Y1="1" X2="1" Y2="20" Fill="Black" StrokeThickness="2" Canvas.Left="509.163" Canvas.Top="16" RenderTransformOrigin="0.5,1.0" Stretch="Uniform" UseLayoutRounding="False" Stroke="Black" Margin="-232.739,13,232.739,376.89"/>
+        <Line X1="1" Y1="1" X2="1" Y2="20" Fill="Black"  Canvas.Left="509.333" Canvas.Top="16" RenderTransformOrigin="0.5,1.0" Stretch="Uniform" UseLayoutRounding="False" Stroke="Black" Margin="-244.533,44.2,220.224,376.8">
+            <Line.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="{Binding VM_Yaw, Mode=OneWay}"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Line.RenderTransform>
+        </Line>
+        <TextBox TextWrapping="Wrap" Text="{Binding VM_AltitudeText, Mode=Oneway}" Canvas.Left="676" Canvas.Top="308" Margin="115,182,615,215"/>
+        <TextBox Height="27" TextWrapping="Wrap" Text="Altitude" Width="50" Background="#FFFF1700" Canvas.Left="623" Canvas.Top="394" Margin="143,244,600,150"/>
+        <ProgressBar Minimum="0" Maximum="1" Value="{Binding VM_Throttle1, Mode=OneWay}" HorizontalAlignment="Left" Height="22" VerticalAlignment="Top" Width="244" Canvas.Left="189" Canvas.Top="381" Margin="307,14,0,0"/>
+        <ed:Arc StartAngle="-120" EndAngle="120" Stretch="None" StrokeThickness="20"      
+                    StrokeDashArray=".25" Stroke="#FF484D5F" Margin="577,6,34,299" RenderTransformOrigin="0.5,0.5">
+            <ed:Arc.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="-0.383"/>
+                    <RotateTransform Angle="0.357"/>
+                    <TranslateTransform X="0.079"/>
+                </TransformGroup>
+            </ed:Arc.RenderTransform>
+        </ed:Arc>
+        <ed:Arc StartAngle="-120" EndAngle="{Binding VM_Airspeed, Mode=OneWay}" Stretch="None" StrokeThickness="20"
+                    StrokeDashArray=".25" Stroke="Turquoise" Margin="577,4,36,283" RenderTransformOrigin="0.5,0.5">
+            <ed:Arc.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="1.011" ScaleX="0.989"/>
+                    <SkewTransform AngleX="-7.235"/>
+                    <RotateTransform Angle="9.866"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </ed:Arc.RenderTransform>
+        </ed:Arc>
+        <TextBox TextWrapping="Wrap" Text="Throttle1" Width="75" Background="#FF6577E5" RenderTransformOrigin="2.628,-2.022" Margin="207,14,511,379"/>
+        <TextBox TextWrapping="Wrap" Text="Throttle2" Width="75" Background="#FF6577E5" RenderTransformOrigin="2.628,-2.022" Margin="208,53,510,343"/>
+        <TextBox TextWrapping="Wrap" Text="North" Margin="10,197,731,195"/>
+        <TextBox Height="27" TextWrapping="Wrap" Text="Heading" Width="75" Margin="16,276,702,118" Background="#FFFFEA00"/>
+        <TextBox Height="27" TextWrapping="Wrap" Text="Roll" Width="35" Margin="37,70,721,324" Background="#FFFF00D6"/>
+        <TextBox Height="27" TextWrapping="Wrap" Text="Pitch" Width="35" Background="#FFFF00D6" Margin="30,163,728,231"/>
+        <TextBox Height="27" TextWrapping="Wrap" Text="Yaw" Width="35" Background="#FFFF00D6" Margin="143,70,615,324"/>
+        <TextBox TextWrapping="Wrap" Text="Rudder" Background="#FF6577E5" RenderTransformOrigin="2.628,-2.022" Margin="209,95,509,298"/>
+        <ProgressBar Minimum="0" Maximum="1000" Value="{Binding VM_Altitude, Mode=OneWay}" RenderTransformOrigin="0.5,0.5" Margin="161,206,529,181">
+            <ProgressBar.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="269.295"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </ProgressBar.RenderTransform>
+        </ProgressBar>
+        <TextBlock Text="   km/h" Foreground="#FF878A9F" HorizontalAlignment="Center"
+                        FontSize="14" RenderTransformOrigin="19.609,-4.134" Canvas.Left="639" Canvas.Top="143" Margin="612,109,116,-101" Width="65"/>
+        <TextBlock Foreground="#FF120808" Text= "{Binding VM_AirspeedText, Mode=OneWay}"
+                        FontSize="25" FontWeight="Light" Margin="616,46,68,324" Width="109"/>
+        <oxy:PlotView Name="Plot6" Model="{Binding VM_Plot6}" Margin="556,182,135,150"/>
+        <oxy:PlotView Name="Plot7" Model="{Binding VM_Plot7}" Margin="663,176,10,150"/>
+        <oxy:PlotView x:Name="Plot8" Model="{Binding VM_Plot8}" Margin="593,289,33,47" Background="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+        <ListBox x:Name="Property_Names" ItemsSource="{Binding VM_Properties, Mode=OneWay}" SelectionChanged="ListBox_SelectionChanged" Margin="465,176,240,33"/>
+        <TextBox HorizontalAlignment="Left" Margin="659,151,0,0" Text="{Binding VM_BestCollerate, Mode=OneWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.567,-3.371"/>
+    </Grid>
+</Window>

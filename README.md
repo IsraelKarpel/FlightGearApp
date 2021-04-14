@@ -21,7 +21,7 @@ Watch the flight at FG and analize the data at our dashboard
 The app will send your flight data to FG.
 
 App dashboard:
-![app dashboard](https://github.com/IsraelKarpel/FlightGearApp/blob/master/flightgear%20dashboard.jpg)
+![app dashboard](https://github.com/IsraelKarpel/FlightGearApp/blob/master/flightgear%20dashboard2.jpg)
 
 You can control and analize the flight with:
 1. Play button (start sending data to FG and dashboard)
@@ -49,7 +49,7 @@ You can control and analize the flight with:
 
 ## software architecture
 There are 4 main files:
-1. Main Window.xam - View (visuality)- contain all the visual components and containers
+1. Main Window.xaml - View (visuality)- contain all the visual components and containers
 2. MainWindow.xaml.css - View (functionallity) - contain all the logic and code of the visual components
 3. PlaneModel - Model - data, data analtics and data manipulation of the flight's data
 4. PlaneViewModel - View-Model - connect the view and the model

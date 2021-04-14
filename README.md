@@ -54,5 +54,8 @@ There are 4 main files:
 3. PlaneModel - Model - data, data analtics and data manipulation of the flight's data
 4. PlaneViewModel - View-Model - connect the view and the model
 
-# basic uml
+## basic uml
 ![uml](https://github.com/IsraelKarpel/FlightGearApp/blob/master/flightgear%20uml.jpg)
+
+## Tutorial
+you can watch [here](https://youtu.be/HhcgV7TdUY0) example of basic use of this app

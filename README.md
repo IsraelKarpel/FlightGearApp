@@ -58,4 +58,4 @@ There are 4 main files:
 ![uml](https://github.com/IsraelKarpel/FlightGearApp/blob/master/flightgear%20uml.jpg)
 
 ## Tutorial
-you can watch [here](https://youtu.be/HhcgV7TdUY0) example of basic use of this app
+you can watch [here](https://youtu.be/713nmPH1TAs) example of basic use of this app
